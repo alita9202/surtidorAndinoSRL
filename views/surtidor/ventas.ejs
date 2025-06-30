@@ -1,26 +1,59 @@
 <% layout('index') %>
 
-<h1>Ventas</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Surtidor Andino</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/reporte/ventas-por-combustible">Reporte de Ventas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reporte/ventas-por-tipo-venta">Reporte de Cargas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reporte/ingresos-por-surtidor">Reporte de Ingresos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reporte/comparar-metas">Reporte de Comisiones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reporte/nivel-stock">Reporte de Abastecimiento</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID Venta</th>
-            <th>Id Producto</th>
-            <th>Turno</th>
-            <th>Fecha Hora</th>
-            <th>Unidad Vendida</th>
-        </tr>
+<div class="container">
+  <h1 class="mb-4">Ventas</h1>
+
+  <table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID Venta</th>
+        <th>Id Producto</th>
+        <th>Turno</th>
+        <th>Fecha Hora</th>
+        <th>Unidad Vendida</th>
+      </tr>
     </thead>
     <tbody>
-        <% ventas.forEach(venta => { %>
-            <tr>
-                <td><%= venta.Id_Venta %></td>
-                <td><%= venta.Id_Producto %></td>
-                <td><%= venta.Turno %></td>
-                <td><%= venta.Fecha_Hora %></td>
-                <td><%= venta.Unidad_Vendida %></td>
-            </tr>
-        <% }) %>
+      <% ventas.forEach(venta => { %>
+        <tr>
+          <td><%= venta.Id_Venta %></td>
+          <td><%= venta.Id_Producto %></td>
+          <td><%= venta.Turno %></td>
+          <td><%= venta.Fecha_Hora %></td>
+          <td><%= venta.Unidad_Vendida %></td>
+        </tr>
+      <% }) %>
     </tbody>
-</table>
+  </table>
+</div>
+
