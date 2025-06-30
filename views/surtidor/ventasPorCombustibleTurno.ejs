@@ -1,0 +1,36 @@
+<% layout('index') %>
+
+<h1>REPORTE: VENTAS POR TIPO DE COMBUSTIBLE Y TURNO</h1>
+
+<form method="GET" action="/reporte/ventas-por-combustible">
+    <label>Fecha Inicio:</label>
+    <input class="form-control" type="date" name="fechaInicio" value="<%= fechaInicio %>" required />
+    
+    <label>Fecha Fin:</label>
+    <input class="form-control" type="date" name="fechaFin" value="<%= fechaFin %>" required />
+
+    <button class="btn btn-success mt-2" type="submit">Ver reporte</button>
+</form>
+
+<table class="table table-dark table-striped mt-4">
+    <thead class="table-info">
+        <tr>
+            <th>Producto</th>
+            <th>Tipo Combustible</th>
+            <th>Turno</th>
+            <th>Fecha</th>
+            <th>Litros Vendidos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% ventas.forEach(v => { %>
+            <tr class="table-secondary">
+                <td><%- v.Nombre_Producto %></td>
+                <td><%- v.Tipo_Combustible %></td>
+                <td><%- v.Turno %></td>
+                <td><%- v.Fecha.toISOString().split('T')[0] %></td>
+                <td><%- v.Litros_Vendidos %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

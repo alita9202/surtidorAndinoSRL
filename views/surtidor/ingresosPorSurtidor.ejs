@@ -1,0 +1,39 @@
+<% layout('index') %>
+
+<h1>Reporte de Ingresos por Surtidor</h1>
+
+<form method="GET" action="/reporte/ingresos-por-surtidor" class="mb-3">
+    <label for="idSurtidor">Zona Surtidor:</label>
+    <select name="idSurtidor" id="idSurtidor" class="form-select" onchange="this.form.submit()">
+        <option value="1" <%= idSurtidor == 1 ? 'selected' : '' %>>Zona Sur</option>
+        <option value="2" <%= idSurtidor == 2 ? 'selected' : '' %>>Achachicala</option>
+        <option value="3" <%= idSurtidor == 3 ? 'selected' : '' %>>El Alto</option>
+    </select>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id Surtidor</th>
+            <th>Tipo Combustible</th>
+            <th>Método de Pago</th>
+            <th>Fecha</th>
+            <th>Mes</th>
+            <th>Año</th>
+            <th>Ingresos (Bs.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% ingresos.forEach(i => { %>
+            <tr>
+                <td><%= i.Id_Surtidor %></td>
+                <td><%= i.Tipo_Combustible %></td>
+                <td><%= i.Metodo_Pago %></td>
+                <td><%= i.Fecha_Diaria.toISOString().split('T')[0] %></td>
+                <td><%= i.Mes %></td>
+                <td><%= i.Año %></td>
+                <td><%= i.Ingresos.toFixed(2) %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

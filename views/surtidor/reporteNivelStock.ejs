@@ -1,0 +1,31 @@
+<% layout('index') %>
+
+<h1 class="mb-3">Reporte de Nivel de Stock</h1>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Tanque</th>
+            <th>Tipo Producto</th>
+            <th>Nivel Actual</th>
+            <th>Ingresos</th>
+            <th>Egresos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% stock.forEach(s => { 
+            let colorClass = '';
+            if (s.Nivel_Actual === 'Alto') colorClass = 'table-success';
+            else if (s.Nivel_Actual === 'Medio') colorClass = 'table-warning';
+            else if (s.Nivel_Actual === 'Bajo') colorClass = 'table-danger';
+        %>
+            <tr class="<%= colorClass %>">
+                <td><%= s.Tanque %></td>
+                <td><%= s.Tipo_Producto %></td>
+                <td><%= s.Nivel_Actual %></td>
+                <td><%= s.Ingresos %></td>
+                <td><%= s.Egresos %></td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>

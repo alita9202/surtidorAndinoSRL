@@ -1,0 +1,26 @@
+<% layout('index') %>
+
+<h1>Ventas</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID Venta</th>
+            <th>Id Producto</th>
+            <th>Turno</th>
+            <th>Fecha Hora</th>
+            <th>Unidad Vendida</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% ventas.forEach(venta => { %>
+            <tr>
+                <td><%= venta.Id_Venta %></td>
+                <td><%= venta.Id_Producto %></td>
+                <td><%= venta.Turno %></td>
+                <td><%= venta.Fecha_Hora %></td>
+                <td><%= venta.Unidad_Vendida %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

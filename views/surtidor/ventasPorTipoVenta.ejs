@@ -1,0 +1,34 @@
+<% layout('index') %>
+
+<h1>Reporte de Ventas por Tipo de Venta</h1>
+
+<form method="GET" action="/reporte/ventas-por-tipo-venta" class="mb-3">
+    <label for="tipoVenta">Tipo de Venta:</label>
+    <select name="tipoVenta" id="tipoVenta" class="form-select" onchange="this.form.submit()">
+        <option value="Particular" <%= tipoVenta === 'Particular' ? 'selected' : '' %>>Particular</option>
+        <option value="Empresa" <%= tipoVenta === 'Empresa' ? 'selected' : '' %>>Empresa</option>
+    </select>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Placa Vehículo</th>
+            <th>Cantidad Carga</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Tipo Venta</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% ventas.forEach(venta => { %>
+            <tr>
+                <td><%= venta.Placa_Vehiculo %></td>
+                <td><%= venta.Cantidad_Carga %></td>
+                <td><%= venta.Monto %></td>
+                <td><%= venta.Fecha.toISOString().split('T')[0] %></td>
+                <td><%= venta.Tipo_Venta %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

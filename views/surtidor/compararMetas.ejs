@@ -1,0 +1,99 @@
+<% layout('index') %>
+
+<h1>Comparar Metas de Empleados</h1>
+
+<form method="GET" action="/reporte/comparar-metas">
+    <div class="row mb-3">
+        <div class="col">
+            <label for="empleado1">Empleado 1:</label>
+            <select class="form-select" name="empleado1" id="empleado1" onchange="filtrarSegundo()">
+                <option value="">Seleccione</option>
+                <% empleados.forEach(e => { %>
+                    <% if (!empleado2 || empleado2 !== e) { %>
+                        <option value="<%= e %>" <%= empleado1 === e ? 'selected' : '' %>><%= e %></option>
+                    <% } %>
+                <% }); %>
+            </select>
+        </div>
+        <div class="col">
+            <label for="empleado2">Empleado 2:</label>
+            <select class="form-select" name="empleado2" id="empleado2" onchange="this.form.submit()">
+                <option value="">Seleccione</option>
+                <% empleados.forEach(e => { %>
+                    <% if (!empleado1 || empleado1 !== e) { %>
+                        <option value="<%= e %>" <%= empleado2 === e ? 'selected' : '' %>><%= e %></option>
+                    <% } %>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+</form>
+
+<% if (resultados) { %>
+    <h3>Resultado de la Comparación</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Empleado</th>
+                <th>Meta de Venta</th>
+                <th>Total Vendido</th>
+                <th>Estado de Meta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% resultados.forEach(r => { %>
+                <tr>
+                    <td><%= r.Nombre_Empleado %></td>
+                    <td><%= r.Meta_Venta %></td>
+                    <td><%= r.Total_Vendido.toFixed(2) %></td>
+                    <td><%= r.Estado_Meta %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<% if (resumen) { %>
+    <h3 class="mt-5">Resumen General de Empleados</h3>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Empleado</th>
+                <th>Meta de Venta</th>
+                <th>Total Vendido</th>
+                <th>Estado de Meta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% resumen.forEach(r => { %>
+                <tr class="<%= r.Estado_Meta === 'Meta Alcanzada' ? 'table-success' : 'table-danger' %>">
+                    <td><%= r.Nombre_Empleado %></td>
+                    <td><%= r.Meta_Venta %></td>
+                    <td><%= r.Total_Vendido.toFixed(2) %></td>
+                    <td><%= r.Estado_Meta %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<script>
+    function filtrarSegundo() {
+        const empleado1 = document.getElementById('empleado1').value;
+        const select2 = document.getElementById('empleado2');
+        const options = select2.options;
+        
+        for (let i = 0; i < options.length; i++) {
+            options[i].disabled = false;
+            if (options[i].value === empleado1) {
+                options[i].disabled = true;
+                if (select2.value === empleado1) {
+                    select2.value = "";
+                }
+            }
+        }
+    }
+
+    // Ejecutar al cargar la página para deshabilitar la opción seleccionada en empleado1 dentro del segundo select
+    window.onload = filtrarSegundo;
+</script>
