@@ -1,9 +1,9 @@
 <% layout('index') %>
 
-<h1 class="mb-3">Reporte de Nivel de Stock</h1>
+<h1 class="mb-4 text-secondary">Reporte de Nivel de Stock</h1>
 
-<table class="table table-bordered">
-    <thead class="table-dark">
+<table class="table table-clean table-hover shadow-sm border rounded">
+    <thead>
         <tr>
             <th>Tanque</th>
             <th>Tipo Producto</th>
@@ -13,19 +13,29 @@
         </tr>
     </thead>
     <tbody>
-        <% stock.forEach(s => { 
-            let colorClass = '';
-            if (s.Nivel_Actual === 'Alto') colorClass = 'table-success';
-            else if (s.Nivel_Actual === 'Medio') colorClass = 'table-warning';
-            else if (s.Nivel_Actual === 'Bajo') colorClass = 'table-danger';
-        %>
-            <tr class="<%= colorClass %>">
-                <td><%= s.Tanque %></td>
-                <td><%= s.Tipo_Producto %></td>
-                <td><%= s.Nivel_Actual %></td>
-                <td><%= s.Ingresos %></td>
-                <td><%= s.Egresos %></td>
+        <% if (stock && stock.length > 0) { %>
+            <% stock.forEach(s => { 
+                let badgeClass = '';
+                if (s.Nivel_Actual === 'Alto') badgeClass = 'nivel-Alto';
+                else if (s.Nivel_Actual === 'Medio') badgeClass = 'nivel-Medio';
+                else if (s.Nivel_Actual === 'Bajo') badgeClass = 'nivel-Bajo';
+            %>
+                <tr>
+                    <td class="text-center"><%= s.Tanque %></td>
+                    <td class="text-center"><%= s.Tipo_Producto %></td>
+                    <td class="text-center"><span class="badge-nivel <%= badgeClass %>"><%= s.Nivel_Actual %></span></td>
+                    <td class="text-center"><%= s.Ingresos %></td>
+                    <td class="text-center"><%= s.Egresos %></td>
+
+                </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No hay datos para mostrar.</td>
             </tr>
-        <% }); %>
+        <% } %>
     </tbody>
 </table>
+
+
+

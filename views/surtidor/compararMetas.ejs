@@ -1,11 +1,11 @@
 <% layout('index') %>
 
-<h1>Comparar Metas de Empleados</h1>
+<h1 class="mb-4 text-secondary">Comparar Metas de Empleados</h1>
 
 <form method="GET" action="/reporte/comparar-metas">
     <div class="row mb-3">
         <div class="col">
-            <label for="empleado1">Empleado 1:</label>
+            <label for="empleado1" class="form-label">Empleado 1:</label>
             <select class="form-select" name="empleado1" id="empleado1" onchange="filtrarSegundo()">
                 <option value="">Seleccione</option>
                 <% empleados.forEach(e => { %>
@@ -16,8 +16,8 @@
             </select>
         </div>
         <div class="col">
-            <label for="empleado2">Empleado 2:</label>
-            <select class="form-select" name="empleado2" id="empleado2" onchange="this.form.submit()">
+            <label for="empleado2" class="form-label">Empleado 2:</label>
+            <select class="form-select" name="empleado2" id="empleado2">
                 <option value="">Seleccione</option>
                 <% empleados.forEach(e => { %>
                     <% if (!empleado1 || empleado1 !== e) { %>
@@ -26,12 +26,15 @@
                 <% }); %>
             </select>
         </div>
+        <div class="col d-flex align-items-end">
+            <button type="submit" class="btn btn-dark w-100">Comparar</button>
+        </div>
     </div>
 </form>
 
 <% if (resultados) { %>
-    <h3>Resultado de la Comparación</h3>
-    <table class="table table-bordered">
+    <h3 class="mt-4">Resultado de la Comparación</h3>
+    <table class="table table-hover table-bordered shadow-sm rounded">
         <thead>
             <tr>
                 <th>Empleado</th>
@@ -41,12 +44,14 @@
             </tr>
         </thead>
         <tbody>
-            <% resultados.forEach(r => { %>
+            <% resultados.forEach(r => { 
+                const badge = r.Estado_Meta === 'Meta Alcanzada' ? 'alcanzada' : 'no-alcanzada';
+            %>
                 <tr>
                     <td><%= r.Nombre_Empleado %></td>
                     <td><%= r.Meta_Venta %></td>
                     <td><%= r.Total_Vendido.toFixed(2) %></td>
-                    <td><%= r.Estado_Meta %></td>
+                    <td><span class="badge-meta <%= badge %>"><%= r.Estado_Meta %></span></td>
                 </tr>
             <% }); %>
         </tbody>
@@ -55,8 +60,8 @@
 
 <% if (resumen) { %>
     <h3 class="mt-5">Resumen General de Empleados</h3>
-    <table class="table table-hover table-bordered">
-        <thead class="table-dark">
+    <table class="table table-hover table-bordered shadow-sm rounded">
+        <thead>
             <tr>
                 <th>Empleado</th>
                 <th>Meta de Venta</th>
@@ -65,12 +70,14 @@
             </tr>
         </thead>
         <tbody>
-            <% resumen.forEach(r => { %>
-                <tr class="<%= r.Estado_Meta === 'Meta Alcanzada' ? 'table-success' : 'table-danger' %>">
+            <% resumen.forEach(r => { 
+                const badge = r.Estado_Meta === 'Meta Alcanzada' ? 'alcanzada' : 'no-alcanzada';
+            %>
+                <tr>
                     <td><%= r.Nombre_Empleado %></td>
                     <td><%= r.Meta_Venta %></td>
                     <td><%= r.Total_Vendido.toFixed(2) %></td>
-                    <td><%= r.Estado_Meta %></td>
+                    <td><span class="badge-meta <%= badge %>"><%= r.Estado_Meta %></span></td>
                 </tr>
             <% }); %>
         </tbody>
@@ -82,7 +89,7 @@
         const empleado1 = document.getElementById('empleado1').value;
         const select2 = document.getElementById('empleado2');
         const options = select2.options;
-        
+
         for (let i = 0; i < options.length; i++) {
             options[i].disabled = false;
             if (options[i].value === empleado1) {
@@ -93,7 +100,5 @@
             }
         }
     }
-
-    // Ejecutar al cargar la página para deshabilitar la opción seleccionada en empleado1 dentro del segundo select
     window.onload = filtrarSegundo;
 </script>

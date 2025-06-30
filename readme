@@ -1,0 +1,5 @@
+-- npm init -y
+npm install mysql
+npm install boostrap
+npm install express
+npm install ejs-mate
